@@ -1,0 +1,63 @@
+1) Create Organizer:
+
+URL:
+
+http://localhost:8080/event-management-api/organizers
+
+POST Request Body:
+
+{
+  "name" : "Omar E. Castro"
+}
+
+
+Create Event with Venue:
+
+URL:
+
+http://localhost:8080/event-management-api/events
+
+2) POST Request Body:
+
+{
+  "name" : "Spring Data Rest Training",
+  "description": "The Best Course Ever",
+  "startTime" : "2017-08-29T14:46:18Z",
+  "endTime" : "2017-08-29T16:46:18Z",
+  "zoneId" : "US/Central",
+  "organizer" : "/organizers/1",
+  "venue" : {
+    "name" : "Castro Consulting and Training INC",
+    "streetAddress" : "8815",
+    "streetAddress2" : "Wald Rd",
+    "city" : "Houston",
+    "state" : "Texas",
+    "country" : "United States",
+    "postalCode" : "77034"
+  }
+}
+
+NOTE: The way venue is passed in in this example  will not generate
+a venue (will be null in the DB), instead you want to pass it an end
+point in the same way organizer is being passed in the JSON body
+because this is how Spring Data Rest is set up by default - ideally
+you would not want this behavior so you have to customize the Spring Data
+Rest Association inside of the Event entity by annotating the venue field
+with @RestResource to accept it the way we have done it in this example.
+
+
+
+3) Create Participant:
+
+URL:
+
+http://localhost:8080/event-management-api/participants
+
+POST Request Body:
+
+{
+  "name" : "Test Participant",
+  "email" : "test-participant@gmail.com",
+  "event" : "/events/1",
+  "checkedIn":"false"
+}
